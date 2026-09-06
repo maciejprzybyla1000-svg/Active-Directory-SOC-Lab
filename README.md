@@ -34,3 +34,5 @@ Splunk correlated three failed logon events with the subsequent
 account lockout and automatically triggered a scheduled alert.
 
 Status: Detected and validated
+
+📄 [View full incident report](incident-reports/INC-001-failed-logons-account-lockout.md)
