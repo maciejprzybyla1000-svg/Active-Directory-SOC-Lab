@@ -40,11 +40,29 @@ Splunk correlated the events and triggered the detection:
 | Source Workstation | `KOMP1` |
 | Domain Controller | `WIN-PHHPPA2H6K3` |
 
+#### Failed Logon Events — Event ID 4625
+
+The following Splunk search shows failed Windows authentication attempts collected from the lab environment.
+
+![Failed Logon Events - Event ID 4625](../screenshots/INC-001/01-failed-logons-4625.png)
+
+#### Account Lockout — Event ID 4740
+
+The Domain Controller recorded account lockout events after repeated failed authentication attempts.
+
+![Account Lockout - Event ID 4740](../screenshots/INC-001/02-account-lockout-4740.png)
+
 ### Detection Logic
 
 The Splunk detection searches for accounts with three or more failed logon events (Event ID 4625) and at least one subsequent account lockout event (Event ID 4740).
 
 Events are correlated by account name.
+
+#### Splunk Correlation Result
+
+The detection correlated three failed logon events for account `USER` with one subsequent account lockout.
+
+![Splunk Correlation Result](../screenshots/INC-001/03-splunk-correlation.png)
 
 ### Investigation
 
@@ -79,5 +97,11 @@ In a production environment, a SOC analyst should:
 The detection successfully identified three failed authentication attempts followed by an account lockout.
 
 The scheduled Splunk alert triggered successfully and appeared in **Triggered Alerts** with **Medium** severity.
+
+#### Triggered Alert
+
+The detection was configured as a scheduled Splunk alert and successfully triggered after the simulated authentication activity.
+
+![Triggered Splunk Alert](../screenshots/INC-001/04-triggered-alert.png)
 
 **Detection status: Validated**
