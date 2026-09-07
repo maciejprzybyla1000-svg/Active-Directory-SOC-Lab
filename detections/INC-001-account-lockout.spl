@@ -1,0 +1,12 @@
+index=* sourcetype="WinEventLog:Security" (EventCode=4625 OR EventCode=4740)
+| eval Account=mvindex(Nazwa_konta,-1)
+| stats count(eval(EventCode=4625)) AS Failed_Logons
+        count(eval(EventCode=4740)) AS Account_Lockouts
+        min(_time) AS First_Event
+        max(_time) AS Last_Event
+        values(host) AS Hosts
+  BY Account
+| where Failed_Logons>=3 AND Account_Lockouts>=1
+| eval First_Event=strftime(First_Event, "%Y-%m-%d %H:%M:%S")
+| eval Last_Event=strftime(Last_Event, "%Y-%m-%d %H:%M:%S")
+| table Account Failed_Logons Account_Lockouts First_Event Last_Event Hosts
