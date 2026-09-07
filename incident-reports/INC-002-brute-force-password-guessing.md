@@ -54,22 +54,7 @@ The Splunk detection identifies accounts generating five or more failed Windows 
 
 The detection uses Windows Security Event ID 4625 and groups events by account name.
 
-```spl
-index=* sourcetype="WinEventLog:Security" EventCode=4625
-| eval Account=mvindex(Nazwa_konta,-1)
-| eval EventTime=_time
-| bin _time span=5m
-| stats count AS Failed_Logons
-        min(EventTime) AS First_Event
-        max(EventTime) AS Last_Event
-        values(host) AS Hosts
-        values(Typ_logowania) AS Logon_Types
-  BY Account
-| where Failed_Logons>=5
-| eval First_Event=strftime(First_Event, "%Y-%m-%d %H:%M:%S")
-| eval Last_Event=strftime(Last_Event, "%Y-%m-%d %H:%M:%S")
-| table Account Failed_Logons First_Event Last_Event Hosts Logon_Types
-```
+📄 [View Splunk detection rule](../detections/INC-002-brute-force.spl)
 
 #### Splunk Detection Result
 
