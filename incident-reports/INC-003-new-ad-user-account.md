@@ -60,16 +60,9 @@ The Splunk detection searches for Windows Security Event ID 4720, which indicate
 
 Because the Windows event data was collected in Polish, the relevant account information was extracted from the `Message` field using `rex`.
 
-The first occurrence of `Nazwa konta` represents the account responsible for creating the user, while the final occurrence represents the newly created account.
+The detection extracts both the account responsible for creating the user and the newly created account.
 
-```spl
-index=* source="WinEventLog:Security" EventCode=4720
-| rex field=Message "Nazwa konta:\s+(?<Creator_Account>[^\s]+)"
-| rex field=Message max_match=0 "Nazwa konta:\s+(?<All_Accounts>[^\s]+)"
-| eval Created_Account=mvindex(All_Accounts, -1)
-| eval Event_Time=strftime(_time, "%Y-%m-%d %H:%M:%S")
-| table Event_Time host Creator_Account Created_Account EventCode
-```
+📄 [View Splunk detection rule](../detections/INC-003-new-account-created.spl)
 
 #### Splunk Detection Result
 
