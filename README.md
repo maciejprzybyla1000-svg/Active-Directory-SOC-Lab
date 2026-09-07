@@ -56,3 +56,23 @@ A Splunk detection identified accounts with five or more failed logon events wit
 **Status:** Detected and validated
 
 📄 [View full incident report](incident-reports/INC-002-brute-force-password-guessing.md)
+
+---
+
+### INC-003 — New Active Directory User Account Created
+
+A controlled Active Directory account creation scenario was performed in the `POLICY.LAB` domain.
+
+Windows Security Event ID 4720 was generated when a new domain user account was created. Splunk extracted both the account responsible for the change and the newly created account, then automatically triggered a scheduled alert.
+
+**Detection highlights:**
+
+- Windows Event ID 4720 — User Account Created
+- Active Directory account change monitoring
+- Creator and created account extraction using Splunk `rex`
+- Scheduled alert execution
+- Identity-related security monitoring
+
+**Status:** Detected and validated
+
+📄 [View full incident report](incident-reports/INC-003-new-ad-user-account.md)
