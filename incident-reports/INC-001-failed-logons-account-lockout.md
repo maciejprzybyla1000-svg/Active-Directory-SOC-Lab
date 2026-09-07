@@ -54,13 +54,15 @@ The Domain Controller recorded account lockout events after repeated failed auth
 
 ### Detection Logic
 
-The Splunk detection searches for accounts with three or more failed logon events (Event ID 4625) and at least one subsequent account lockout event (Event ID 4740).
+The Splunk detection searches for accounts with three or more failed logon events (Event ID 4625) and at least one account lockout event (Event ID 4740).
 
 Events are correlated by account name.
 
+📄 [View Splunk detection rule](../detections/INC-001-account-lockout.spl)
+
 #### Splunk Correlation Result
 
-The detection correlated three failed logon events for account `USER` with one subsequent account lockout.
+The detection correlated three failed logon events for account `USER` with one account lockout.
 
 ![Splunk Correlation Result](../screenshots/INC-001/03-splunk-correlation.png)
 
