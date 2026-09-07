@@ -1,0 +1,6 @@
+index=* sourcetype="WinEventLog:Security" EventCode=4720
+| rex field=Message "Nazwa konta:\s+(?<Creator_Account>[^\s]+)"
+| rex field=Message max_match=0 "Nazwa konta:\s+(?<All_Accounts>[^\s]+)"
+| eval Created_Account=mvindex(All_Accounts,-1)
+| eval Event_Time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table Event_Time host Creator_Account Created_Account EventCode
